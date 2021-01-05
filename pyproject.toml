@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "grpc-minimal"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+delphai-utils = {extras = ["config", "grpc"], version = "^0.2.0"}
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.30.0"
+pep8-naming = "^0.11.1"
+flake8 = "^3.8.3"
+poethepoet = "^0.8.0"
+grpcio-tools = "^1.32.0"
+
+
+[tool.poe.tasks]
+start = "python src/server.py"
+codegen = [
+  {cmd = "mkdir -p ./src"},
+  {cmd = "protodep up --force -u"},
+  {cmd = "python -m grpc_tools.protoc -I./.vendor -I. --grpc_python_out=./src --python_out=./src ./proto/*.proto"}, 
+  {cmd = "python -m grpc_tools.protoc -I./.vendor -I. --grpc_python_out=./src/proto --python_out=./src/proto ./.vendor/**/*.proto"}
+]

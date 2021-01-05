@@ -1,0 +1,12 @@
+.venv
+.vendor
+validator.py
+src/proto
+.env
+__pycache__
+*_pb2.py
+.pytest_cache
+.chart
+.github
+tilt_modules
+.helm
